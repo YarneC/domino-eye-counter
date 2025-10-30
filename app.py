@@ -30,5 +30,9 @@ def detect():
     processed_img_io = process_image_from_dataurl(data)
     return send_file(processed_img_io, mimetype='image/png')
 
+@app.route(/ping)
+def ping():
+    return "OK", 200
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

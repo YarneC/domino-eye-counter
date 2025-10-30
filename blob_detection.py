@@ -14,7 +14,7 @@ def detect_blobs_from_gray_blur(gray_blur):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.minArea = 100
-    params.maxArea = 2000
+    params.maxArea = 1000
     params.filterByCircularity = False
     params.filterByConvexity = False
     params.filterByInertia = True
@@ -28,6 +28,7 @@ def visualize_keypoints_on_array(image, keypoints):
         x, y = int(kp.pt[0]), int(kp.pt[1])
         radius = int(kp.size / 2) if kp.size > 0 else 10
         cv2.circle(img_copy, (x,y), radius, (0,0,255), 4, lineType=cv2.LINE_AA)
-    cv2.putText(img_copy, f"Circles: {len(keypoints)}", (10,30),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,0,255), 2, cv2.LINE_AA)
-    return img_copy
+    
+    text = f"Detected {len(keypoints)} domino eyes"
+
+    return img_copy, text

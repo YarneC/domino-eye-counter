@@ -15,10 +15,10 @@ def process_image_from_dataurl(data_url):
     
     img_resized, gray_blur = preprocess_image_from_array(img)
     keypoints = detect_blobs_from_gray_blur(gray_blur)
-    output_img = visualize_keypoints_on_array(img_resized, keypoints)
+    output_img, text = visualize_keypoints_on_array(img_resized, keypoints)
     
     _, buffer = cv2.imencode('.png', output_img)
-    return BytesIO(buffer.tobytes())
+    return BytesIO(buffer.tobytes()), text
 
 @app.route('/')
 def index():
@@ -27,12 +27,16 @@ def index():
 @app.route('/detect', methods=['POST'])
 def detect():
     data = request.json['image']
-    processed_img_io = process_image_from_dataurl(data)
-    return send_file(processed_img_io, mimetype='image/png')
+    processed_img_io, text = process_image_from_dataurl(data)
+    processed_img_io.seek(0)
+    response = send_file(processed_img_io, mimetype='image/png')
+    # attach detection text in a response header so the frontend can display it
+    response.headers['X-Detection-Result'] = text
+    return response
 
 @app.route('/ping')
 def ping():
     return "OK", 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Domino Blob Detector</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Domino eye Detector</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>Domino Blob Detector</h1>
-  <video id="camera" autoplay playsinline></video>
-  <button id="snap">Take Photo</button>
-  <canvas id="snapshot" style="display:none;"></canvas>
-  <img id="result" alt="Result will appear here">
+  <header class="app-header">
+    <h1>Domino eye Detector</h1>
+    <div id="detectionText" aria-live="polite" class="detection-text"></div>
+  </header>
 
+  <!-- placeholder will contain the live <video> OR the result <img> -->
+  <main id="placeholder" class="placeholder" aria-live="polite" aria-atomic="true"></main>
+
+  <footer class="app-footer">
+    <div class="controls">
+      <button id="openCameraBtn" type="button" aria-label="Open camera" title="Open camera" class="icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="48" height="48" role="img" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M213.1 128.8L202.7 160L128 160C92.7 160 64 188.7 64 224L64 480C64 515.3 92.7 544 128 544L512 544C547.3 544 576 515.3 576 480L576 224C576 188.7 547.3 160 512 160L437.3 160L426.9 128.8C420.4 109.2 402.1 96 381.4 96L258.6 96C237.9 96 219.6 109.2 213.1 128.8zM320 256C373 256 416 299 416 352C416 405 373 448 320 448C267 448 224 405 224 352C224 299 267 256 320 256z"/>
+        </svg>
+      </button>
+
+      <button id="captureBtn" type="button" aria-label="Capture photo" title="Capture photo" class="icon-btn capture-btn" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="48" height="48" role="img" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M528 320C528 205.1 434.9 112 320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320z"/>
+        </svg>
+      </button>
+
+      <div aria-hidden="true"></div>
+    </div>
+  </footer>
+
+  <canvas id="snapshot" style="display:none;"></canvas>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

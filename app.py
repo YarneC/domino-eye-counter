@@ -30,7 +30,7 @@ def detect():
     processed_img_io = process_image_from_dataurl(data)
     return send_file(processed_img_io, mimetype='image/png')
 
-@app.route(/ping)
+@app.route('/ping')
 def ping():
     return "OK", 200
 

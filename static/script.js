@@ -103,6 +103,7 @@ captureBtn.addEventListener('click', async () => {
     img.alt = 'Detection result';
     img.style.maxWidth = '100%';
     img.style.maxHeight = '100%';
+    img.style.objectFit = 'contain';
     img.src = URL.createObjectURL(blob);
     placeholder.appendChild(img);
 

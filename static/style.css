@@ -4,6 +4,9 @@
   --btn-bg: #222831;
   --btn-hover: #2f3438;
   --muted-border: rgba(255,255,255,0.06);
+
+  /* footer / safe spacing */
+  --footer-height: 84px; /* visible footer height on small screens */
 }
 
 /* full-viewport app, no scrolling */
@@ -56,6 +59,9 @@ body{
   padding:12px;
   box-sizing:border-box;
   background:transparent;
+
+  /* ensure placeholder content is not covered when footer is fixed on small screens */
+  padding-bottom: calc(12px + var(--footer-height));
 }
 
 /* ensure media fits within placeholder without producing scroll */
@@ -68,7 +74,7 @@ body{
   display:block;
 }
 
-/* footer fixed at bottom within flex flow */
+/* footer fixed at bottom within flex flow on small screens */
 .app-footer{
   flex:0 0 auto;
   padding:12px;
@@ -77,6 +83,35 @@ body{
   width:100%;
   /* reserve safe-area on mobile */
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Make footer fixed and raised on narrow screens so buttons are visible above on-screen nav bars */
+@media (max-width: 900px) {
+  .app-footer{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:20;
+    height:var(--footer-height);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px calc(12px + env(safe-area-inset-bottom, 8px));
+    background: linear-gradient(180deg, rgba(34,40,49,0.00), rgba(34,40,49,0.02));
+    /* small visual lift so it's clearly above content but not too far */
+    transform:translateZ(0);
+  }
+
+  /* reduce placeholder bottom padding a bit on phone (already added default padding-bottom above) */
+  .placeholder{
+    padding-bottom: calc(var(--footer-height) + 8px);
+  }
+
+  /* slightly increase gap around controls so buttons are not flush to edges on small screens */
+  .controls {
+    padding: 4px 8px;
+  }
 }
 
 /* controls: three equal columns so capture is centered */

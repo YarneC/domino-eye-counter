@@ -30,7 +30,6 @@ def detect():
     processed_img_io, text = process_image_from_dataurl(data)
     processed_img_io.seek(0)
     response = send_file(processed_img_io, mimetype='image/png')
-    # attach detection text in a response header so the frontend can display it
     response.headers['X-Detection-Result'] = text
     return response
 
